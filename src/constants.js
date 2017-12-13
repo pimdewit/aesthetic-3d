@@ -36,7 +36,7 @@ export const MATERIALS = {
  * @param {Number} COLOR
  */
 export const WORLD_CONFIG = {
-  COLOR: 0x030303
+  COLOR: 0x030303,
 };
 
 /**
@@ -55,7 +55,8 @@ export const UI_CONFIG = {
  */
 export const USER_SETTINGS = {
   POST_PROCESSING: true,
-  CONTROLS_ENABLED: true
+  CONTROLS_ENABLED: true,
+  SCREEN_DENSITY: window.devicePixelRatio
 };
 
 /**

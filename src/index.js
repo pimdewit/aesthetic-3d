@@ -3,16 +3,14 @@ import resize from 'brindille-resize';
 
 import { APP_SETTINGS, MATERIALS, WORLD_CONFIG, UI_CONFIG, USER_SETTINGS, PASSES } from './constants';
 
-import { WebGLRenderer, Scene, PerspectiveCamera, PointLight, AmbientLight, BoxBufferGeometry, MeshStandardMaterial, Mesh } from 'three';
+import { WebGLRenderer, Scene, PerspectiveCamera, PointLight } from 'three';
 import WAGNER from '@superguigui/wagner';
 
 import OrbitControls from './controls/OrbitControls';
 
-import Torus from './objects/Torus';
 import Debug from './objects/debug';
 import Floor from './objects/floor';
 
-import { keyToId, keyToText, createFunctionalCheckbox } from './common/common';
 import { Drawer } from './ui/drawer';
 import { GUI } from './ui/gui';
 
@@ -30,7 +28,7 @@ const container = APP_SETTINGS.PARENT_ELEMENT;
 
 const renderer = new WebGLRenderer({antialias: true});
 renderer.setClearColor(WORLD_CONFIG.COLOR);
-renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setPixelRatio(USER_SETTINGS.SCREEN_DENSITY);
 container.appendChild(renderer.domElement);
 
 /* Composer for special effects */
@@ -67,17 +65,24 @@ resize.addListener(onResize);
 const engine = loop(render);
 engine.start();
 
-/* -------------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
 
 /**
   Resize canvas
 */
 function onResize() {
-  console.log(resize.width, resize.height);
-  camera.aspect = resize.width / resize.height;
+  const width = resize.width;
+  const height = resize.height;
+  const density = USER_SETTINGS.SCREEN_DENSITY === 0 ? 0.5 : USER_SETTINGS.SCREEN_DENSITY;
+
+  const widthTimesDensity = width * density;
+  const heightTimesDensity = height * density;
+
+  camera.aspect = width / height;
   camera.updateProjectionMatrix();
-  renderer.setSize(resize.width, resize.height);
-  composer.setSize(resize.width * window.devicePixelRatio, resize.height * window.devicePixelRatio);
+
+  renderer.setSize(width, height);
+  composer.setSize(widthTimesDensity, heightTimesDensity);
 }
 
 /**

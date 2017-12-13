@@ -1,6 +1,6 @@
 
 import { USER_SETTINGS } from '../constants';
-import { keyToId, keyToText, createFunctionalCheckbox } from '../common/gui-commons';
+import { keyToId, keyToText, createFunctionalCheckbox, createFunctionalRange, getListItem } from '../common/gui-commons';
 
 /**
  * @author Pim de Wit <https://pdw.io>
@@ -20,26 +20,8 @@ export class GUI {
         const id = keyToId(key);
         const labelText = keyToText(key);
 
-        let input = null;
-        let label = null;
 
-        switch (typeof value) {
-          case 'boolean':
-            [input, label] = createFunctionalCheckbox(id, labelText);
-
-            input.checked = value;
-
-            input.addEventListener('change', event => {
-              USER_SETTINGS.POST_PROCESSING = event.target.checked;
-            });
-
-            break;
-        }
-
-        // Create a list item to bundle the elements together.
-        const li = document.createElement('li');
-        li.appendChild(input);
-        li.appendChild(label);
+        const li = getListItem(key, value, id, labelText);
 
         this.items.push(li);
 
