@@ -1,18 +1,27 @@
+/* Constants, settings - mainly here to prevent "magic numbers". */
+import { APP_SETTINGS, MATERIALS, WORLD_CONFIG, UI_CONFIG, USER_SETTINGS, PASSES } from './constants';
+
+/** To avoid unneccesary hassle. */
 import loop from 'raf-loop';
 import resize from 'brindille-resize';
 
-import { APP_SETTINGS, MATERIALS, WORLD_CONFIG, UI_CONFIG, USER_SETTINGS, PASSES } from './constants';
-
+/** Import the components from THREE needed to run an environment. */
 import { WebGLRenderer, Scene, PerspectiveCamera, PointLight } from 'three';
+
+/** https://github.com/spite/Wagner */
 import WAGNER from '@superguigui/wagner';
 
+/** One of THREE's controls modules. */
 import OrbitControls from './controls/OrbitControls';
 
+/** Objects to display in our scene. */
 import Debug from './objects/debug';
 import Floor from './objects/floor';
 
+/** UI Elements (heavy WIP) */
 import { Drawer } from './ui/drawer';
 import { GUI } from './ui/gui';
+
 
 const drawer = new Drawer(UI_CONFIG.DRAWER);
 drawer.addToggle(UI_CONFIG.DRAWER_TOGGLE);
@@ -25,10 +34,11 @@ gui.objectToList(USER_SETTINGS).then(list => {
 
 /* Init renderer and canvas */
 const container = APP_SETTINGS.PARENT_ELEMENT;
-
 const renderer = new WebGLRenderer({antialias: true});
+
 renderer.setClearColor(WORLD_CONFIG.COLOR);
 renderer.setPixelRatio(USER_SETTINGS.SCREEN_DENSITY);
+
 container.appendChild(renderer.domElement);
 
 /* Composer for special effects */
@@ -48,11 +58,9 @@ const backLight = new PointLight(0xFFFFFF, 0.1);
 backLight.position.y = -20;
 scene.add(backLight);
 
-
 /* Add a floor to the scene. */
 const floor = new Floor(MATERIALS.FLOOR, -50);
 scene.add(floor);
-
 
 /* Actual content of the scene */
 const object = new Debug(3, MATERIALS.SUBJECT);
@@ -61,34 +69,36 @@ scene.add(object);
 /* Various event listeners */
 resize.addListener(onResize);
 
-/* create and launch main loop */
+/* Create and launch main loop */
 const engine = loop(render);
 engine.start();
 
 /* -------------------------------------------------------------------------- */
 
 /**
-  Resize canvas
-*/
+ * Resize canvas
+ */
 function onResize() {
   const width = resize.width;
   const height = resize.height;
-  const density = USER_SETTINGS.SCREEN_DENSITY === 0 ? 0.5 : USER_SETTINGS.SCREEN_DENSITY;
-
-  const widthTimesDensity = width * density;
-  const heightTimesDensity = height * density;
+  const density = USER_SETTINGS.SCREEN_DENSITY;
 
   camera.aspect = width / height;
   camera.updateProjectionMatrix();
 
   renderer.setSize(width, height);
-  composer.setSize(widthTimesDensity, heightTimesDensity);
+
+  /**
+   * WAGNER composer does not have the method 'setPixelRatio' like THREE does.
+   * That's why we need to scale the canvas ourselves.
+   */
+  composer.setSize(width * density, height * density);
 }
 
 /**
   Render loop
 */
-function render(dt) {
+function render() {
   if (USER_SETTINGS.CONTROLS_ENABLED) {
     controls.update();
   }

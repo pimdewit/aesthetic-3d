@@ -1,0 +1,8 @@
+Install modules: `npm install`
+
+Serve (dev environment): `npm start`
+
+Build: `npm build`
+
+
+The current architecture of this repo is an edited version of: https://github.com/superguigui/threejs-starter-kit

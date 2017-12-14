@@ -13,7 +13,6 @@ export default class Floor extends Object3D {
     // Rotate the floor so it is facing the y+ axis.
     mesh.rotation.x = -90;
 
-    
     mesh.position.y = y;
     mesh.receiveShadow = true;
   }

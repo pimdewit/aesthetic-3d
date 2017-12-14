@@ -9,6 +9,8 @@ body {
   font-family: 'Space Mono', monospace;
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
+
+  overflow: hidden; /* TODO: unhackify */
 }
 
 canvas {
