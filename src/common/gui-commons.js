@@ -26,6 +26,8 @@ export function getListItem(key, value, id, labelText) {
       input.addEventListener('change', event => {
         USER_SETTINGS[key] = event.target.value;
       });
+
+      window.dispatchEvent(new Event('resize'));
       break;
   }
 
