@@ -45,7 +45,7 @@ export const WORLD_CONFIG = {
 export const UI_CONFIG = {
   DRAWER: document.querySelector('.drawer-backdrop'),
   DRAWER_CONTAINER: document.querySelector('.drawer-container'),
-  DRAWER_TOGGLE: document.querySelector('.drawer-toggle'),
+  DRAWER_TOGGLE: document.querySelectorAll('[drawer-toggle]'),
   DRAWER_TOGGLE_ACTIVE: 'drawer-toggle--open'
 };
 

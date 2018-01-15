@@ -2,9 +2,10 @@ import { hideElement, showElement } from '../common/common';
 
 const DRAWER_CONSTANTS = {
   DRAWER_TOGGLE_ACTIVE: 'drawer-toggle--open',
+  ACTIVE_ATTRIBUTE: 'opened',
   TITLE_WHILST_ENABLED: 'Close drawer',
   TITLE_WHILST_DISABLED: 'Open drawer'
-}
+};
 
 /**
  * @author Pim de Wit <https://pdw.io>
@@ -38,6 +39,9 @@ export class Drawer {
     return this._togglers;
   }
 
+  /**
+   * Toggles the drawer open/closed.
+   */
   toggle() {
     this.open = !this.open;
   }
@@ -61,15 +65,16 @@ export class Drawer {
 
   /**
    * Set the visual state of the toggle buttons.
+   * @private
    */
   _setTogglerState() {
     this._togglers.forEach(toggler => {
       if (this.open) {
         toggler.title = DRAWER_CONSTANTS.TITLE_WHILST_ENABLED;
-        toggler.classList.add(DRAWER_CONSTANTS.DRAWER_TOGGLE_ACTIVE);
+        toggler.setAttribute(DRAWER_CONSTANTS.ACTIVE_ATTRIBUTE, true);
       } else {
         toggler.title = DRAWER_CONSTANTS.TITLE_WHILST_DISABLED;
-        toggler.classList.remove(DRAWER_CONSTANTS.DRAWER_TOGGLE_ACTIVE);
+        toggler.removeAttribute(DRAWER_CONSTANTS.ACTIVE_ATTRIBUTE);
       }
     });
   }
