@@ -1,5 +1,5 @@
-/* Constants, settings - mainly here to prevent "magic numbers". */
 import { APP_SETTINGS, MATERIALS, WORLD_CONFIG, UI_CONFIG, USER_SETTINGS, PASSES } from './constants';
+import { APP_SETTINGS, MATERIALS, WORLD_CONFIG, RENDER_CONFIG, UI_CONFIG, USER_SETTINGS, POST_PROCESSING_LAYERS } from './constants';
 
 /** To avoid unneccesary hassle. */
 import loop from 'raf-loop';
@@ -34,9 +34,12 @@ gui.objectToList(USER_SETTINGS).then(list => {
 
 /* Init renderer and canvas */
 const container = APP_SETTINGS.PARENT_ELEMENT;
-const renderer = new WebGLRenderer({antialias: true});
+const renderer = new WebGLRenderer({
+  antialias: RENDER_CONFIG.ANTI_ALIAS,
+  powerPreference: RENDER_CONFIG.POWER_PREFERENCE
+});
 
-renderer.setClearColor(WORLD_CONFIG.COLOR);
+renderer.setClearColor(RENDER_CONFIG.CLEAR_COLOR);
 renderer.setPixelRatio(USER_SETTINGS.SCREEN_DENSITY);
 
 container.appendChild(renderer.domElement);

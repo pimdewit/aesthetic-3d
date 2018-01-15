@@ -8,18 +8,28 @@ export const APP_SETTINGS = {
   PARENT_ELEMENT: document.querySelector('#app')
 };
 
+const THEME = 'dark'; // 'dark', 'light', 'environment'
+
+const COLOR = {
+  MAIN: 0x212223,
+  BACKGROUND: {
+    DARK: 0x030303,
+    LIGHT: 0xf2f3f4
+  }
+};
+
 /**
  * Materials used in the scene.
  */
 export const MATERIALS = {
   SUBJECT: {
-    color: 0x212223,
+    color: COLOR.MAIN,
     roughness: 0.5,
     metalness: 1,
     flatShading: true
   },
   FLOOR: {
-    color: 0x212223,
+    color: COLOR.MAIN,
     roughness: 0.5,
     metalness: 1,
     flatShading: true
@@ -31,7 +41,21 @@ export const MATERIALS = {
  * @param {Number} COLOR
  */
 export const WORLD_CONFIG = {
-  COLOR: 0x030303,
+  COLOR: COLOR.BACKGROUND.DARK,
+};
+
+/**
+ * Settings for the renderer.
+ * @param {Boolean} ANTI_ALIAS
+ * @param {String} POWER_PREFERENCE Provides a hint to the user agent
+ *     indicating what configuration of GPU is suitable for this WebGL context.
+ *     Can be "high-performance", "low-power" or "default".
+ * @param {String} CLEAR_COLOR Hexadecimal color to clear the canvas with.
+ */
+export const RENDER_CONFIG = {
+  ANTI_ALIAS: true,
+  POWER_PREFERENCE: 'high-performance',
+  CLEAR_COLOR: COLOR.BACKGROUND.DARK // THEME ? THEME[WORLD_CONFIG.THEME_ID] : COLOR.BACKGROUND.DARK
 };
 
 /**
