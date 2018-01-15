@@ -12,10 +12,25 @@ const THEME = 'dark'; // 'dark', 'light', 'environment'
 
 const COLOR = {
   MAIN: 0x212223,
+  LIGHT: 0xffffff,
   BACKGROUND: {
     DARK: 0x030303,
     LIGHT: 0xf2f3f4
   }
+};
+
+/**
+ * Settings for the renderer.
+ * @param {Boolean} ANTI_ALIAS
+ * @param {String} POWER_PREFERENCE Provides a hint to the user agent
+ *     indicating what configuration of GPU is suitable for this WebGL context.
+ *     Can be "high-performance", "low-power" or "default".
+ * @param {String} CLEAR_COLOR Hexadecimal color to clear the canvas with.
+ */
+export const RENDER_CONFIG = {
+  ANTI_ALIAS: true,
+  POWER_PREFERENCE: 'high-performance',
+  CLEAR_COLOR: COLOR.BACKGROUND.DARK // THEME ? THEME[WORLD_CONFIG.THEME_ID] : COLOR.BACKGROUND.DARK
 };
 
 /**
@@ -44,34 +59,20 @@ export const WORLD_CONFIG = {
   COLOR: COLOR.BACKGROUND.DARK,
   LIGHTS: [
     {
-      COLOR: 0xffffff,
+      COLOR: COLOR.LIGHT,
       INTENSITY: 1,
       X: 0,
       Y: 200,
       Z: 0
     },
     {
-      COLOR: 0xffffff,
+      COLOR: COLOR.LIGHT,
       INTENSITY: 0.1,
       X: 0,
       Y: -20,
       Z: 0
     }
   ]
-};
-
-/**
- * Settings for the renderer.
- * @param {Boolean} ANTI_ALIAS
- * @param {String} POWER_PREFERENCE Provides a hint to the user agent
- *     indicating what configuration of GPU is suitable for this WebGL context.
- *     Can be "high-performance", "low-power" or "default".
- * @param {String} CLEAR_COLOR Hexadecimal color to clear the canvas with.
- */
-export const RENDER_CONFIG = {
-  ANTI_ALIAS: true,
-  POWER_PREFERENCE: 'high-performance',
-  CLEAR_COLOR: COLOR.BACKGROUND.DARK // THEME ? THEME[WORLD_CONFIG.THEME_ID] : COLOR.BACKGROUND.DARK
 };
 
 /**

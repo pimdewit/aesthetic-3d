@@ -47,14 +47,6 @@ const controls = new OrbitControls(camera, {element: renderer.domElement, parent
 /* -------------------------------------------------------------------------- */
 /* Environment */
 
-WORLD_CONFIG.LIGHTS.forEach(config => {
-  const light = new PointLight(config.COLOR, config.INTENSITY);
-  light.position.x = config.X;
-  light.position.y = config.Y;
-  light.position.z = config.Z;
-  scene.add(light);
-})
-
 /* Add a floor to the scene. */
 const floor = new Floor(MATERIALS.FLOOR, -50);
 scene.add(floor);
@@ -62,6 +54,12 @@ scene.add(floor);
 /* Actual content of the scene */
 const object = new Debug(3, MATERIALS.SUBJECT);
 scene.add(object);
+
+WORLD_CONFIG.LIGHTS.forEach(config => {
+  const light = new PointLight(config.COLOR, config.INTENSITY);
+  light.position.set(config.X, config.Y, config.Z);
+  scene.add(light);
+});
 
 /* Various event listeners */
 resize.addListener(onResize);
@@ -73,11 +71,13 @@ engine.start();
 /* -------------------------------------------------------------------------- */
 
 /**
- * Resize canvas
+ * Resize handler.
  */
 function onResize() {
   const width = resize.width;
   const height = resize.height;
+
+  console.log(width, height);
   const density = USER_SETTINGS.SCREEN_DENSITY;
 
   camera.aspect = width / height;
