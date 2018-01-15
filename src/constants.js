@@ -42,6 +42,22 @@ export const MATERIALS = {
  */
 export const WORLD_CONFIG = {
   COLOR: COLOR.BACKGROUND.DARK,
+  LIGHTS: [
+    {
+      COLOR: 0xffffff,
+      INTENSITY: 1,
+      X: 0,
+      Y: 200,
+      Z: 0
+    },
+    {
+      COLOR: 0xffffff,
+      INTENSITY: 0.1,
+      X: 0,
+      Y: -20,
+      Z: 0
+    }
+  ]
 };
 
 /**

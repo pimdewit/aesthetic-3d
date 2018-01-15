@@ -45,14 +45,15 @@ const camera = new PerspectiveCamera(50, resize.width / resize.height, 0.1, 700)
 const controls = new OrbitControls(camera, {element: renderer.domElement, parent: renderer.domElement, distance: 10 });
 
 /* -------------------------------------------------------------------------- */
-/* Lights */
-const frontLight = new PointLight(0xFFFFFF, 1);
-frontLight.position.y = 200;
-scene.add(frontLight);
+/* Environment */
 
-const backLight = new PointLight(0xFFFFFF, 0.1);
-backLight.position.y = -20;
-scene.add(backLight);
+WORLD_CONFIG.LIGHTS.forEach(config => {
+  const light = new PointLight(config.COLOR, config.INTENSITY);
+  light.position.x = config.X;
+  light.position.y = config.Y;
+  light.position.z = config.Z;
+  scene.add(light);
+})
 
 /* Add a floor to the scene. */
 const floor = new Floor(MATERIALS.FLOOR, -50);
