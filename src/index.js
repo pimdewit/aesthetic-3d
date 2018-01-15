@@ -1,30 +1,21 @@
-import { APP_SETTINGS, MATERIALS, WORLD_CONFIG, UI_CONFIG, USER_SETTINGS, PASSES } from './constants';
 import { APP_SETTINGS, MATERIALS, WORLD_CONFIG, RENDER_CONFIG, UI_CONFIG, USER_SETTINGS, POST_PROCESSING_LAYERS } from './constants';
 
-/** To avoid unneccesary hassle. */
 import loop from 'raf-loop';
 import resize from 'brindille-resize';
 
-/** Import the components from THREE needed to run an environment. */
 import { WebGLRenderer, Scene, PerspectiveCamera, PointLight } from 'three';
 
-/** https://github.com/spite/Wagner */
 import WAGNER from '@superguigui/wagner';
 
-/** One of THREE's controls modules. */
 import OrbitControls from './controls/OrbitControls';
-
-/** Objects to display in our scene. */
 import Debug from './objects/debug';
 import Floor from './objects/floor';
-
-/** UI Elements (heavy WIP) */
 import { Drawer } from './ui/drawer';
 import { GUI } from './ui/gui';
 
 
 const drawer = new Drawer(UI_CONFIG.DRAWER);
-drawer.addToggle(UI_CONFIG.DRAWER_TOGGLE);
+UI_CONFIG.DRAWER_TOGGLE.forEach(toggle => drawer.addToggle(toggle));
 
 const gui = new GUI();
 gui.objectToList(USER_SETTINGS).then(list => {
@@ -32,6 +23,7 @@ gui.objectToList(USER_SETTINGS).then(list => {
 });
 
 
+/* -------------------------------------------------------------------------- */
 /* Init renderer and canvas */
 const container = APP_SETTINGS.PARENT_ELEMENT;
 const renderer = new WebGLRenderer({
@@ -52,6 +44,7 @@ const scene = new Scene();
 const camera = new PerspectiveCamera(50, resize.width / resize.height, 0.1, 700);
 const controls = new OrbitControls(camera, {element: renderer.domElement, parent: renderer.domElement, distance: 10 });
 
+/* -------------------------------------------------------------------------- */
 /* Lights */
 const frontLight = new PointLight(0xFFFFFF, 1);
 frontLight.position.y = 200;
