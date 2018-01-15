@@ -1,9 +1,4 @@
-import BloomPass from '@superguigui/wagner/src/passes/bloom/MultiPassBloomPass';
-import FXAAPass from '@superguigui/wagner/src/passes/fxaa/FXAAPass';
-import NoisePass from '@superguigui/wagner/src/passes/noise/noise';
-import VignettePass from '@superguigui/wagner/src/passes/vignette/VignettePass';
-import Godray from '@superguigui/wagner/src/passes/godray/godraypass';
-import DOFPass from '@superguigui/wagner/src/passes/dof/DOFPass';
+import { FXAA, Bloom, DepthOfField, LightScattering, Vignette, Noise} from './shaders/shaders';
 
 /**
  * Application settings.
@@ -64,11 +59,9 @@ export const USER_SETTINGS = {
  * @type {Array}
  * @desc The passes will overlay eachother in the same order as the array.
  */
-export const PASSES = [
-  new FXAAPass(),
-  new BloomPass({ blurAmount: 1, applyZoomBlur: false }),
-  new DOFPass({ focalPass: 0.1, aperture: 0.01 }),
-  // new Godray({ blurAmount: 0 }),
-  new VignettePass({ reduction: 0.4 }),
-  new NoisePass({ speed: 0.2, amount: 0.05 })
+export const POST_PROCESSING_LAYERS = [
+  FXAA,
+  Bloom,
+  Vignette,
+  Noise
 ];

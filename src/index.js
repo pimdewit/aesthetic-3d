@@ -87,30 +87,22 @@ function onResize() {
   camera.updateProjectionMatrix();
 
   renderer.setSize(width, height);
-
-  /**
-   * WAGNER composer does not have the method 'setPixelRatio' like THREE does.
-   * That's why we need to scale the canvas ourselves.
-   */
   composer.setSize(width * density, height * density);
 }
 
-/**
-  Render loop
-*/
 function render() {
   if (USER_SETTINGS.CONTROLS_ENABLED) {
     controls.update();
   }
 
-  object.rotation.y += 0.01;
+  object.rotation.y += 0.01; // for the lulz
 
   if (USER_SETTINGS.POST_PROCESSING) {
     composer.reset();
     composer.render(scene, camera);
 
-    for (let index = 0; index < PASSES.length; index++) {
-      const pass = PASSES[index];
+    for (let index = 0; index < POST_PROCESSING_LAYERS.length; index++) {
+      const pass = POST_PROCESSING_LAYERS[index];
       composer.pass(pass);
     }
 
