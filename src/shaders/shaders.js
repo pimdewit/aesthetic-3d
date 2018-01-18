@@ -52,3 +52,31 @@ export const Vignette = new VignettePass({
  * In this case it allows for a 2d overlay of pixels being coloured.
  */
 export const Noise = new NoisePass({ speed: 0.2, amount: 0.05 });
+
+/**
+ * passes.
+ * @type {Array}
+ * @desc The passes will overlay eachother in the same order as the array.
+ */
+const POST_PROCESSING_LAYERS = [
+  FXAA,
+  Bloom,
+  Vignette,
+  Noise
+];
+
+/**
+ * Render all shader passes.
+ * @param {WAGNER.Composer} composer 
+ */
+export function shaderRenderer(scene, camera, composer) {
+  composer.reset();
+  composer.render(scene, camera);
+
+  for (let index = 0; index < POST_PROCESSING_LAYERS.length; index++) {
+    const pass = POST_PROCESSING_LAYERS[index];
+    composer.pass(pass);
+  }
+
+  composer.toScreen();
+};

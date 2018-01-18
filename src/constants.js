@@ -1,5 +1,3 @@
-import { FXAA, Bloom, DepthOfField, LightScattering, Vignette, Noise} from './shaders/shaders';
-
 /**
  * Application settings.
  * @param {HTMLElement} PARENT_ELEMENT Element to append the canvas to.
@@ -94,15 +92,3 @@ export const USER_SETTINGS = {
   CONTROLS_ENABLED: true,
   SCREEN_DENSITY: window.devicePixelRatio
 };
-
-/**
- * passes.
- * @type {Array}
- * @desc The passes will overlay eachother in the same order as the array.
- */
-export const POST_PROCESSING_LAYERS = [
-  FXAA,
-  Bloom,
-  Vignette,
-  Noise
-];
